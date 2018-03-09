@@ -22,10 +22,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "project", catalog = "project_mgmt")
 public class Project implements java.io.Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8571978322726161167L;
 	private Integer projectId;
 	@JsonIgnore

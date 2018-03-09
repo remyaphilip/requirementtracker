@@ -20,10 +20,17 @@ public class ProjectController {
 	@Autowired
 	public ProjectRepository projectRepository;
 
-	@RequestMapping(path = "project/{id}/",method = RequestMethod.POST)
-	public Project addProject(@PathVariable("id") Integer id,@RequestBody Project project) {
+	@RequestMapping(path = "project/{id}/", method = RequestMethod.POST)
+	public Project addProject(@PathVariable("id") Integer id, @RequestBody Project project) {
 		project.setBoard(boardRepository.findOne(id));
 		projectRepository.save(project);
 		return project;
+
 	}
+
+	@RequestMapping(path = "project/{id}/", method = RequestMethod.GET)
+	public Project getProject(@PathVariable("id") Integer id) {
+		return projectRepository.findOne(id);
+	}
+
 }
