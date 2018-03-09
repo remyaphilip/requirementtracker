@@ -1,13 +1,15 @@
 package com.project.model;
-// Generated Mar 4, 2018 7:08:47 PM by Hibernate Tools 5.2.3.Final
+// Generated Mar 5, 2018 8:44:45 PM by Hibernate Tools 5.2.3.Final
+
+import static javax.persistence.GenerationType.AUTO;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -22,21 +24,27 @@ public class Board implements java.io.Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6354180993141666738L;
+	private static final long serialVersionUID = 115719463196023379L;
 	private Integer boardId;
+	private String projectType;
 	private Set<Project> projects = new HashSet<Project>(0);
 	private Set<List> lists = new HashSet<List>(0);
 
 	public Board() {
 	}
 
-	public Board(Set<Project> projects, Set<List> lists) {
+	public Board(String projectType) {
+		this.projectType = projectType;
+	}
+
+	public Board(String projectType, Set<Project> projects, Set<List> lists) {
+		this.projectType = projectType;
 		this.projects = projects;
 		this.lists = lists;
 	}
 
 	@Id
-	@GeneratedValue(strategy = IDENTITY)
+	@GeneratedValue(strategy = AUTO)
 
 	@Column(name = "board_id", unique = true, nullable = false)
 	public Integer getBoardId() {
@@ -45,6 +53,15 @@ public class Board implements java.io.Serializable {
 
 	public void setBoardId(Integer boardId) {
 		this.boardId = boardId;
+	}
+
+	@Column(name = "project_type", nullable = false, length = 45)
+	public String getProjectType() {
+		return this.projectType;
+	}
+
+	public void setProjectType(String projectType) {
+		this.projectType = projectType;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "board")

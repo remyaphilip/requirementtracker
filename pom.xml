@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>project-mgmt</groupId>
-	<artifactId>project-mgmt</artifactId>
+	<groupId>project-mgmt-app</groupId>
+	<artifactId>project-mgmt-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
@@ -12,8 +12,8 @@
 		<module>issuetrack-api</module>
 		<module>trackattr-api</module>
 	</modules>
-	<name>project-mgmt</name>
-	<description>project-mgmt</description>
+	<name>project-mgmt-app</name>
+	<description>project-mgmt-app</description>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
