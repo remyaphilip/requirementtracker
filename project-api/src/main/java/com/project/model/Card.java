@@ -1,5 +1,5 @@
 package com.project.model;
-// Generated Mar 5, 2018 8:44:45 PM by Hibernate Tools 5.2.3.Final
+// Generated Mar 10, 2018 11:16:05 AM by Hibernate Tools 5.2.3.Final
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -19,10 +19,6 @@ import javax.persistence.Table;
 @Table(name = "card", catalog = "project_mgmt")
 public class Card implements java.io.Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8812674306105261213L;
 	private Integer cardId;
 	private List list;
 	private Serializable description;

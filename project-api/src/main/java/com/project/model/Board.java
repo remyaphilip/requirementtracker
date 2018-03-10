@@ -1,15 +1,13 @@
 package com.project.model;
-// Generated Mar 5, 2018 8:44:45 PM by Hibernate Tools 5.2.3.Final
-
-import static javax.persistence.GenerationType.AUTO;
+// Generated Mar 10, 2018 11:16:05 AM by Hibernate Tools 5.2.3.Final
 
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -21,14 +19,12 @@ import javax.persistence.Table;
 @Table(name = "board", catalog = "project_mgmt")
 public class Board implements java.io.Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 115719463196023379L;
 	private Integer boardId;
 	private String projectType;
 	private Set<Project> projects = new HashSet<Project>(0);
+	private Set<Project> projects_1 = new HashSet<Project>(0);
 	private Set<List> lists = new HashSet<List>(0);
+	private Set<List> lists_1 = new HashSet<List>(0);
 
 	public Board() {
 	}
@@ -37,14 +33,17 @@ public class Board implements java.io.Serializable {
 		this.projectType = projectType;
 	}
 
-	public Board(String projectType, Set<Project> projects, Set<List> lists) {
+	public Board(String projectType, Set<Project> projects, Set<Project> projects_1, Set<List> lists,
+			Set<List> lists_1) {
 		this.projectType = projectType;
 		this.projects = projects;
+		this.projects_1 = projects_1;
 		this.lists = lists;
+		this.lists_1 = lists_1;
 	}
 
 	@Id
-	@GeneratedValue(strategy = AUTO)
+	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "board_id", unique = true, nullable = false)
 	public Integer getBoardId() {
@@ -74,12 +73,30 @@ public class Board implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "board")
+	public Set<Project> getProjects_1() {
+		return this.projects_1;
+	}
+
+	public void setProjects_1(Set<Project> projects_1) {
+		this.projects_1 = projects_1;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "board")
 	public Set<List> getLists() {
 		return this.lists;
 	}
 
 	public void setLists(Set<List> lists) {
 		this.lists = lists;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "board")
+	public Set<List> getLists_1() {
+		return this.lists_1;
+	}
+
+	public void setLists_1(Set<List> lists_1) {
+		this.lists_1 = lists_1;
 	}
 
 }

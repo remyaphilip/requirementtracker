@@ -31,11 +31,18 @@ public class BoardController {
 		boardRepository.save(projectType);
 		return projectType;
 	}
+	
+	@RequestMapping(path = "board/{id}",method = RequestMethod.GET)
+	public Board getBoard(@PathVariable("id") Integer id){
+		return boardRepository.findOne(id);
+	}
 
-	@RequestMapping(path = "board", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = "board/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public java.util.List<Board> getAllBoards() {
 		return boardRepository.findAll();
 	}
+	
+
 
 	@RequestMapping(path = "board/{id}/list", method = RequestMethod.POST)
 	@Transactional

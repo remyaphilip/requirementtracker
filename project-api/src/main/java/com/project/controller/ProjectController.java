@@ -7,9 +7,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
 import com.project.model.Project;
+import com.project.model.Role;
+import com.project.model.UserHasProject;
+import com.project.model.UserHasProjectId;
 import com.project.repository.BoardRepository;
 import com.project.repository.ProjectRepository;
+import com.project.repository.RoleRepository;
+import com.project.repository.UserHasProjectRepository;
 
 @RestController
 @RequestMapping(path = "/")
@@ -19,6 +25,10 @@ public class ProjectController {
 	BoardRepository boardRepository;
 	@Autowired
 	public ProjectRepository projectRepository;
+	@Autowired
+	public UserHasProjectRepository userHasProjectRepo;
+	@Autowired
+	public RoleRepository roleRepo;
 
 	@RequestMapping(path = "project/{id}/", method = RequestMethod.POST)
 	public Project addProject(@PathVariable("id") Integer id, @RequestBody Project project) {
@@ -31,6 +41,14 @@ public class ProjectController {
 	@RequestMapping(path = "project/{id}/", method = RequestMethod.GET)
 	public Project getProject(@PathVariable("id") Integer id) {
 		return projectRepository.findOne(id);
+	}
+
+	@RequestMapping(path = "userproject/role/{roleId}", method = RequestMethod.POST)
+	public UserHasProject addUserToProject(@PathVariable("roleId")Integer roleId, @RequestBody UserHasProjectId userProjectId) {
+		Role r = roleRepo.getOne(roleId);
+		UserHasProject userProject = new UserHasProject(userProjectId, r);
+		userHasProjectRepo.save(userProject);
+		return userProject;
 	}
 
 }

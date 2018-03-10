@@ -10,6 +10,9 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @ComponentScan("com.project")
 @EntityScan(basePackages = "com.project.model")
 @EnableJpaRepositories("com.project.repository")
@@ -29,5 +32,4 @@ public class ProjectApplication {
 			}
 		};
 	}
-
 }
