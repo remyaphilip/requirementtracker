@@ -53,11 +53,20 @@ public class BoardController {
 		return list;
 	}
 
+	@RequestMapping(path = "list/{id}",method = RequestMethod.GET)
+	public List getList(@PathVariable("id") Integer id){
+		return listRepository.findOne(id);
+	}
 	@Transactional
 	@RequestMapping(path = "board/{id}/list", method = RequestMethod.GET)
 	public Set<List> getAllListPerBoard(@PathVariable("id") Integer id) {
 		return boardRepository.findOne(id).getLists();
 
+	}
+	
+	@RequestMapping(path = "list/{id}",method = RequestMethod.DELETE)
+	public void removeList(@PathVariable("id") Integer id){
+		listRepository.delete(id);
 	}
 
 }
