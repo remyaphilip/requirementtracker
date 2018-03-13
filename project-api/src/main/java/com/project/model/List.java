@@ -34,7 +34,6 @@ public class List implements java.io.Serializable {
 	private Board board;
 	private String listName;
 	private Set<Card> cards = new HashSet<Card>(0);
-	private Set<Card> cards_1 = new HashSet<Card>(0);
 
 	public List() {
 	}
@@ -43,11 +42,10 @@ public class List implements java.io.Serializable {
 		this.listName = listName;
 	}
 
-	public List(Board board, String listName, Set<Card> cards, Set<Card> cards_1) {
+	public List(Board board, String listName, Set<Card> cards) {
 		this.board = board;
 		this.listName = listName;
 		this.cards = cards;
-		this.cards_1 = cards_1;
 	}
 
 	@Id
@@ -90,13 +88,5 @@ public class List implements java.io.Serializable {
 		this.cards = cards;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "list")
-	public Set<Card> getCards_1() {
-		return this.cards_1;
-	}
-
-	public void setCards_1(Set<Card> cards_1) {
-		this.cards_1 = cards_1;
-	}
-
+	
 }

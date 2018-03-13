@@ -1,0 +1,10 @@
+spring:
+  jpa: 
+    show-sql: false
+    hibernate.ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQLDialect
+  datasource:
+    url: jdbc:mysql://localhost:3306/issue_track
+    username: root
+    password: mysql
+    driverClassName: com.mysql.jdbc.Driver

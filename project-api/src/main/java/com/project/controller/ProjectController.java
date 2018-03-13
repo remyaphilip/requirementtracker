@@ -12,6 +12,7 @@ import com.project.model.Role;
 import com.project.model.UserHasProject;
 import com.project.model.UserHasProjectId;
 import com.project.repository.BoardRepository;
+import com.project.repository.JdbcRepository;
 import com.project.repository.ProjectRepository;
 import com.project.repository.RoleRepository;
 import com.project.repository.UserHasProjectRepository;
@@ -28,6 +29,8 @@ public class ProjectController {
 	public UserHasProjectRepository userHasProjectRepo;
 	@Autowired
 	public RoleRepository roleRepo;
+	@Autowired
+	public JdbcRepository jdbcRepository;
 
 	@RequestMapping(path = "project/{id}/", method = RequestMethod.POST)
 	public Project addProject(@PathVariable("id") Integer id, @RequestBody Project project) {
@@ -49,5 +52,7 @@ public class ProjectController {
 		userHasProjectRepo.save(userProject);
 		return userProject;
 	}
+	
+	
 
 }

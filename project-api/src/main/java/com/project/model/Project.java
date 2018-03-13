@@ -1,17 +1,15 @@
 package com.project.model;
 // Generated Mar 10, 2018 11:16:05 AM by Hibernate Tools 5.2.3.Final
 
-import java.util.HashSet;
-import java.util.Set;
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -21,6 +19,10 @@ import javax.persistence.Table;
 @Table(name = "project", catalog = "project_mgmt")
 public class Project implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1469532684926976748L;
 	private Integer projectId;
 	private Board board;
 	private String name;
