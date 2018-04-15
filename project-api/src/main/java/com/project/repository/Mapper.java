@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 import com.issuetrack.model.Comment;
 import com.issuetrack.model.Issue;
+import com.project.model.UserHasProjectId;
+import com.user.model.User;
 
 @Component
 public class Mapper implements JdbcRepository {
@@ -52,4 +54,45 @@ public class Mapper implements JdbcRepository {
 
 	}
 
+	@Override
+	public User getUser(String email, String passwordhash) {
+		String auth_fetch_sql = "select u.user_id,u.user_name,u.password_hash,u.email,u.job_title,u.organisation,u.profile_images "
+				+ "from user_service.user u where u.email = ? and u.password_hash = ?";
+		return this.jdbcTemplate.queryForObject(auth_fetch_sql, new Object[] { email, passwordhash },
+				new authRowMapper());
+	}
+
+	@Override
+	public List<UserHasProjectId> getUserProject(Integer userId) {
+		String user_project_sql = "select u.project_id,u.user_id from project_mgmt.user_has_project u where u.user_id = ?";
+		return this.jdbcTemplate.query(user_project_sql, new PreparedStatementSetter() {
+
+			@Override
+			public void setValues(java.sql.PreparedStatement user_project_sql) throws SQLException {
+				user_project_sql.setInt(1, userId);
+
+			}
+
+		}, new UserProjectExtractor());
+	}
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

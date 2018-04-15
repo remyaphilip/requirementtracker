@@ -1,5 +1,7 @@
 package com.project.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.Dao.ProjectHasUsersDao;
 import com.project.model.Project;
 import com.project.model.Role;
 import com.project.model.UserHasProject;
@@ -31,6 +34,8 @@ public class ProjectController {
 	public RoleRepository roleRepo;
 	@Autowired
 	public JdbcRepository jdbcRepository;
+	@Autowired
+	public ProjectHasUsersDao projectHasUsersDao;
 
 	@RequestMapping(path = "project/{id}/", method = RequestMethod.POST)
 	public Project addProject(@PathVariable("id") Integer id, @RequestBody Project project) {
@@ -53,6 +58,13 @@ public class ProjectController {
 		return userProject;
 	}
 	
+	
+	
+	@RequestMapping(path = "userproject/{userId}",method = RequestMethod.GET)
+		public  List<Project> getUserProject(@PathVariable("userId")Integer userId){
+		List<UserHasProjectId> upi=  jdbcRepository.getUserProject(userId);
+		return projectHasUsersDao.getAllProject(upi);
+	}
 	
 
 }

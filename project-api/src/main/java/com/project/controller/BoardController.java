@@ -12,15 +12,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.project.model.Board;
 import com.project.model.List;
 import com.project.repository.BoardRepository;
 import com.project.repository.ListRepository;
+import com.project.repository.ProjectRepository;
+import com.project.utils.View;
 
 @RestController
 @RequestMapping("/")
 public class BoardController {
 
+	@Autowired
+	public ProjectRepository projectRepository;
 	@Autowired
 	public ListRepository listRepository;
 	@Autowired
@@ -40,6 +45,13 @@ public class BoardController {
 	@RequestMapping(path = "board/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public java.util.List<Board> getAllBoards() {
 		return boardRepository.findAll();
+	}
+	
+	@RequestMapping(path = "board/{projectId}",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+	@JsonView(View.BoardView.class)
+	public Board getBoardPerProject(@PathVariable("projectId") Integer projectId ){
+		
+		return projectRepository.findOne(projectId).getBoard();
 	}
 	
 
