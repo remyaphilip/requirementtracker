@@ -33,6 +33,7 @@ public class List implements java.io.Serializable {
 	@JsonIgnore
 	private Board board;
 	private String listName;
+	@JsonIgnore
 	private Set<Card> cards = new HashSet<Card>(0);
 
 	public List() {

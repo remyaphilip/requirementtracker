@@ -29,6 +29,11 @@ public class IssueController {
 			return jdbcRepository.commentFindAll(id);
 		}
 		
+		@RequestMapping(path = "issue/{userId}",method = RequestMethod.GET)
+		public List<Issue> getIssuePerUser(@PathVariable("userId") Integer userId){
+			return jdbcRepository.issueFindAllPerUser(userId);
+		}
+		
 	}
 
 
