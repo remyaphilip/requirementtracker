@@ -26,6 +26,8 @@ public class User implements java.io.Serializable {
 	private String jobTitle;
 	private String organisation;
 	private String profileImages;
+	private String name;
+	private String userRole;
 
 	public User() {
 	}
@@ -36,15 +38,18 @@ public class User implements java.io.Serializable {
 	}
 
 	public User(String userName, String passwordHash, String email, String jobTitle, String organisation,
-			String profileImages) {
+			String profileImages,String name,String userRole) {
 		this.userName = userName;
 		this.passwordHash = passwordHash;
 		this.email = email;
 		this.jobTitle = jobTitle;
 		this.organisation = organisation;
 		this.profileImages = profileImages;
+		this.name = name;
+		this.userRole = userRole;
 	}
 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 
@@ -109,6 +114,24 @@ public class User implements java.io.Serializable {
 
 	public void setProfileImages(String profileImages) {
 		this.profileImages = profileImages;
+	}
+
+	@Column(name = "name", length = 100)
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Column(name = "user_role",length = 45)
+	public String getUserRole() {
+		return this.userRole;
+	}
+
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
 	}
 
 }
