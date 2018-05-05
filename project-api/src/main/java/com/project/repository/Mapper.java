@@ -25,7 +25,7 @@ public class Mapper implements JdbcRepository {
 
 	@Override
 	public List<Issue> issueFindAll(Integer id) {
-		String ISSUE_FETCH_SQL = "select " + "i.issue_id" + ",i.title" + ",i.creation_date" + ",i.description"
+		String ISSUE_FETCH_SQL = "select " + "i.issue_id" + ",i.summary" + ",i.creation_date" + ",i.description"
 				+ ",i.type" + ",i.category" + ",i.due_date" + ",i.reported_by_id" + ",i.assign_to_id" + ",i.estimate"
 				+ ",i.time_spent" + ",i.status_code" + ",i.severity_code" + ",i.priority_code" + ",i.project_id "
 				+ "from issue_track.issue i,project p " + "where i.project_id = p.project_id " + "and p.project_id = ?";
@@ -78,7 +78,7 @@ public class Mapper implements JdbcRepository {
 
 	@Override
 	public List<Issue> issueFindAllPerUser(Integer userId) {
-		String user_issue_all_sql = "select i.issue_id" + ",i.title" + ",i.creation_date" + ",i.description" + ",i.type"
+		String user_issue_all_sql = "select i.issue_id" + ",i.summary" + ",i.creation_date" + ",i.description" + ",i.type"
 				+ ",i.category" + ",i.due_date" + ",i.reported_by_id" + ",i.assign_to_id" + ",i.estimate"
 				+ ",i.time_spent" + ",i.status_code" + ",i.severity_code" + ",i.priority_code" + ",i.project_id"
 				+ " from issue_track.issue i," + "project_mgmt.user_has_project u" + " where u.user_id = ?"
@@ -92,6 +92,23 @@ public class Mapper implements JdbcRepository {
 			}
 
 		}, new IssueResultSetExtractor());
+
+	}
+
+	@Override
+	public List<User> getAllProjectUser(Integer projectId) {
+		// TODO Auto-generated method stub
+		String user_project_sql = "select u.user_id,u.user_name from project_mgmt.user_has_project a,user_service.user u"
+				+ " where a.project_id = ? " + "and u.user_id = a.user_id";
+		return this.jdbcTemplate.query(user_project_sql, new PreparedStatementSetter() {
+
+			@Override
+			public void setValues(java.sql.PreparedStatement user_project_sql) throws SQLException {
+				user_project_sql.setInt(1, projectId);
+
+			}
+
+		}, new ProjectUserExtractor());
 
 	}
 

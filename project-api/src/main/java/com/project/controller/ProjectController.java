@@ -19,6 +19,7 @@ import com.project.repository.JdbcRepository;
 import com.project.repository.ProjectRepository;
 import com.project.repository.RoleRepository;
 import com.project.repository.UserHasProjectRepository;
+import com.user.model.User;
 
 @RestController
 @RequestMapping(path = "/")
@@ -51,20 +52,24 @@ public class ProjectController {
 	}
 
 	@RequestMapping(path = "userproject/role/{roleId}", method = RequestMethod.POST)
-	public UserHasProject addUserToProject(@PathVariable("roleId")Integer roleId, @RequestBody UserHasProjectId userProjectId) {
+	public UserHasProject addUserToProject(@PathVariable("roleId") Integer roleId,
+			@RequestBody UserHasProjectId userProjectId) {
 		Role r = roleRepo.getOne(roleId);
 		UserHasProject userProject = new UserHasProject(userProjectId, r);
 		userHasProjectRepo.save(userProject);
 		return userProject;
 	}
-	
-	
-	
-	@RequestMapping(path = "userproject/{userId}",method = RequestMethod.GET)
-		public  List<Project> getUserProject(@PathVariable("userId")Integer userId){
-		List<UserHasProjectId> upi=  jdbcRepository.getUserProject(userId);
+
+	@RequestMapping(path = "userproject/{userId}", method = RequestMethod.GET)
+	public List<Project> getUserProject(@PathVariable("userId") Integer userId) {
+		List<UserHasProjectId> upi = jdbcRepository.getUserProject(userId);
 		return projectHasUsersDao.getAllProject(upi);
 	}
 	
+	@RequestMapping(path = "projectuser/{projectId}", method = RequestMethod.GET)
+	public List<User> getProjectUser(@PathVariable("projectId") Integer projectId) {
+		return jdbcRepository.getAllProjectUser(projectId);
+	}
 
+	
 }

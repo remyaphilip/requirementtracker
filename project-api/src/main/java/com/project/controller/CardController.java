@@ -16,26 +16,34 @@ import com.project.repository.ListRepository;
 @RestController
 @RequestMapping("/")
 public class CardController {
-	
+
 	@Autowired
 	public CardRepository cardRepository;
-	@Autowired 
+	@Autowired
 	public ListRepository listRepository;
-	
-	@RequestMapping(path = "list/{id}/card",method = RequestMethod.POST)
-	public Card addCard(@PathVariable("id") Integer id,@RequestBody Card card){
+
+	@RequestMapping(path = "list/{id}/card", method = RequestMethod.POST)
+	public Card addCard(@PathVariable("id") Integer id, @RequestBody Card card) {
 		card.setList(listRepository.findOne(id));
 		cardRepository.save(card);
 		return card;
 	}
-	
-	@RequestMapping(path = "list/{id}/getallcard",method = RequestMethod.GET)
-	public Set<Card> getAllCard(@PathVariable("id") Integer id){
+
+	@RequestMapping(path = "list/{id}/getallcard", method = RequestMethod.GET)
+	public Set<Card> getAllCard(@PathVariable("id") Integer id) {
 		return listRepository.findOne(id).getCards();
 	}
 
-	@RequestMapping(path = "card/{id}",method = RequestMethod.DELETE)
-	public void removeCard(@PathVariable("id") Integer id){
+	@RequestMapping(path = "card/{id}", method = RequestMethod.DELETE)
+	public void removeCard(@PathVariable("id") Integer id) {
 		cardRepository.delete(id);
+	}
+
+	@RequestMapping(path = "card/{listId}", method = RequestMethod.POST)
+	public Card InsertCard(@PathVariable("listId") Integer listId, @RequestBody Card card) {
+		
+		card.setList(listRepository.findOne(listId));
+		cardRepository.save(card);
+		return card;
 	}
 }

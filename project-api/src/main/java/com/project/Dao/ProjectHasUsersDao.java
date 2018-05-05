@@ -20,15 +20,19 @@ public class ProjectHasUsersDao {
 	@Autowired
 	ProjectRepository projectRepository;
 
-	public List<Project> getAllProject(List<UserHasProjectId> temp){
+
+
+	public List<Project> getAllProject(List<UserHasProjectId> temp) {
 		ArrayList<Integer> ids = new ArrayList<Integer>();
-		for(UserHasProjectId item: temp){
+		for (UserHasProjectId item : temp) {
 			ids.add(item.getProjectId());
 		}
-	//	ArrayList<Project> p = jdbcRepository.getAllProject(ids);
-	//	System.out.println(projectRepository.findAll(ids).toString());
-		
+		// ArrayList<Project> p = jdbcRepository.getAllProject(ids);
+		// System.out.println(projectRepository.findAll(ids).toString());
+
 		return projectRepository.findAll(ids);
 	}
+
+	
 
 }

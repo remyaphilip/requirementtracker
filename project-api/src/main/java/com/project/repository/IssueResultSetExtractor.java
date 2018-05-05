@@ -20,7 +20,7 @@ public class IssueResultSetExtractor implements ResultSetExtractor<List<Issue>> 
 		while (rs.next()) {
 			Issue issue = new Issue();
 			issue.setIssueId(rs.getInt("issue_id"));
-			issue.setTitle(rs.getString("title"));
+			issue.setSummary(rs.getString("summary"));
 			issue.setCreationDate(rs.getDate("creation_date"));
 			issue.setDescription(rs.getString("description"));
 			issue.setType(rs.getString("type"));
@@ -32,7 +32,7 @@ public class IssueResultSetExtractor implements ResultSetExtractor<List<Issue>> 
 			issue.setTimeSpent(rs.getFloat("time_spent"));
 			issue.setStatusCode(rs.getString("status_code"));
 			issue.setSeverityCode(rs.getInt("severity_code"));
-			issue.setPriorityCode(rs.getInt("priority_code"));
+			issue.setPriorityCode(rs.getString("priority_code"));
 			issue.setProjectId(rs.getInt("project_id"));
 			map.put(rs.getInt("issue_id"), issue);
 

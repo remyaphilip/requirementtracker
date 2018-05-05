@@ -3,6 +3,8 @@ package com.project.model;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,6 +36,13 @@ public class Card implements java.io.Serializable {
 	private Integer reportedById;
 	private Integer assignedToId;
 	private Integer timeTracking;
+	private Integer projectId;
+	private String summary;
+	private Date creationDateTime;
+	private Date startDate;
+	private Date endDate;
+	
+	
 
 	public Card() {
 	}
@@ -120,6 +129,7 @@ public class Card implements java.io.Serializable {
 		this.assignedToId = assignedToId;
 	}
 
+	
 	@Column(name = "time_tracking")
 	public Integer getTimeTracking() {
 		return this.timeTracking;
@@ -128,5 +138,49 @@ public class Card implements java.io.Serializable {
 	public void setTimeTracking(Integer timeTracking) {
 		this.timeTracking = timeTracking;
 	}
+	
+	@Column(name = "project_Id", nullable = false)
+	public Integer getProjectId() {
+		return projectId;
+	}
 
+	public void setProjectId(Integer projectId) {
+		this.projectId = projectId;
+	}
+	
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+	public Date getCreationDateTime() {
+		return creationDateTime;
+	}
+
+	public void setCreationDateTime(Date creationDateTime) {
+		this.creationDateTime = creationDateTime;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+
+
+	
 }
