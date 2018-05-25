@@ -44,4 +44,20 @@ public class IssueController {
 		issueRepository.save(issue);
 		return issue;
 	}
+
+	@RequestMapping(path = "editissue/{issueId}/{projectId}", method = RequestMethod.POST)
+	public Issue EditIssue(@PathVariable("issueId") Integer issueId, @PathVariable("projectId") Integer projectId,
+			@RequestBody Issue issue) {
+		issue.setProjectId(projectId);
+		issue.setIssueId(issueId);
+		issueRepository.save(issue);
+		return issue;
+
+	}
+
+	@RequestMapping(path = "delete/{issueId}", method = RequestMethod.DELETE)
+	public boolean DeleteIssue(@PathVariable("issueId") Integer issueId) {
+		issueRepository.delete(issueId);
+		return true;
+	}
 }

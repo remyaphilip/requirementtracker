@@ -34,6 +34,8 @@ public class IssueResultSetExtractor implements ResultSetExtractor<List<Issue>> 
 			issue.setSeverityCode(rs.getInt("severity_code"));
 			issue.setPriorityCode(rs.getString("priority_code"));
 			issue.setProjectId(rs.getInt("project_id"));
+			issue.setStartDate(rs.getDate("start_date"));
+			issue.setEndDate(rs.getDate("end_date"));
 			map.put(rs.getInt("issue_id"), issue);
 
 		}

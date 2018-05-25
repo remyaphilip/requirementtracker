@@ -1,8 +1,10 @@
 package com.project.controller;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,9 +31,9 @@ public class CardController {
 		return card;
 	}
 
-	@RequestMapping(path = "list/{id}/getallcard", method = RequestMethod.GET)
-	public Set<Card> getAllCard(@PathVariable("id") Integer id) {
-		return listRepository.findOne(id).getCards();
+	@RequestMapping(path = "getallcard/{listId}", method = RequestMethod.GET)
+	public Set<Card> getAllCard(@PathVariable("listId") Integer listId) {
+		return listRepository.findOne(listId).getCards();
 	}
 
 	@RequestMapping(path = "card/{id}", method = RequestMethod.DELETE)
@@ -46,4 +48,11 @@ public class CardController {
 		cardRepository.save(card);
 		return card;
 	}
+//	@RequestMapping(path = "cardsperproject/{projectId}",method = RequestMethod.GET)
+//	public List<Card> getAllCardPerProject(@PathVariable("projectId") Integer projectId){
+//		Card card = new Card();
+//		card.setProjectId(projectId);
+//		Example<Card> ex = Example.of(card);
+//		return cardRepository.findAll(ex);
+//	}
 }

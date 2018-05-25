@@ -41,8 +41,6 @@ public class Card implements java.io.Serializable {
 	private Date creationDateTime;
 	private Date startDate;
 	private Date endDate;
-	
-	
 
 	public Card() {
 	}
@@ -129,7 +127,6 @@ public class Card implements java.io.Serializable {
 		this.assignedToId = assignedToId;
 	}
 
-	
 	@Column(name = "time_tracking")
 	public Integer getTimeTracking() {
 		return this.timeTracking;
@@ -138,7 +135,7 @@ public class Card implements java.io.Serializable {
 	public void setTimeTracking(Integer timeTracking) {
 		this.timeTracking = timeTracking;
 	}
-	
+
 	@Column(name = "project_Id", nullable = false)
 	public Integer getProjectId() {
 		return projectId;
@@ -147,7 +144,7 @@ public class Card implements java.io.Serializable {
 	public void setProjectId(Integer projectId) {
 		this.projectId = projectId;
 	}
-	
+
 	public String getSummary() {
 		return summary;
 	}
@@ -180,7 +177,4 @@ public class Card implements java.io.Serializable {
 		this.endDate = endDate;
 	}
 
-
-
-	
 }

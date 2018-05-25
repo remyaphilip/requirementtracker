@@ -28,6 +28,7 @@ public class Mapper implements JdbcRepository {
 		String ISSUE_FETCH_SQL = "select " + "i.issue_id" + ",i.summary" + ",i.creation_date" + ",i.description"
 				+ ",i.type" + ",i.category" + ",i.due_date" + ",i.reported_by_id" + ",i.assign_to_id" + ",i.estimate"
 				+ ",i.time_spent" + ",i.status_code" + ",i.severity_code" + ",i.priority_code" + ",i.project_id "
+				+ ",i.start_date , i.end_date "
 				+ "from issue_track.issue i,project p " + "where i.project_id = p.project_id " + "and p.project_id = ?";
 		return this.jdbcTemplate.query(ISSUE_FETCH_SQL, new PreparedStatementSetter() {
 
@@ -81,6 +82,7 @@ public class Mapper implements JdbcRepository {
 		String user_issue_all_sql = "select i.issue_id" + ",i.summary" + ",i.creation_date" + ",i.description" + ",i.type"
 				+ ",i.category" + ",i.due_date" + ",i.reported_by_id" + ",i.assign_to_id" + ",i.estimate"
 				+ ",i.time_spent" + ",i.status_code" + ",i.severity_code" + ",i.priority_code" + ",i.project_id"
+				+ ",i.start_date , i.end_date "
 				+ " from issue_track.issue i," + "project_mgmt.user_has_project u" + " where u.user_id = ?"
 				+ " and i.project_id = u.project_id";
 		return this.jdbcTemplate.query(user_issue_all_sql, new PreparedStatementSetter() {
