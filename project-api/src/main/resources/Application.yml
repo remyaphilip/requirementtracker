@@ -8,3 +8,6 @@ spring:
     username: root
     password: mysql
     driverClassName: com.mysql.jdbc.Driver
+upload:
+ file:
+  directory=file:\\C:\Users\Remya\java-workspace\project-mgmt-app\project-api\Upload
