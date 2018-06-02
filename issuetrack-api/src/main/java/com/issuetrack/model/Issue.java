@@ -44,6 +44,8 @@ public class Issue implements java.io.Serializable {
 	private String statusCode;
 	private int severityCode;
 	private String priorityCode;
+	private Date startDate;
+	private Date endDate;
 	private int projectId;
 	@JsonIgnore
 	private List<Comment> comments = new ArrayList<Comment>(0);
@@ -58,7 +60,8 @@ public class Issue implements java.io.Serializable {
 
 	public Issue(String summary, Date creationDate, String description, String type, String category, Date dueDate,
 			Integer reportedById, Integer assignToId, Integer estimate, Float timeSpent, String statusCode,
-			int severityCode, String priorityCode, int projectId, List<Comment> comments) {
+			int severityCode, String priorityCode, Date startDate, Date endDate, int projectId,
+			List<Comment> comments) {
 		this.summary = summary;
 		this.creationDate = creationDate;
 		this.description = description;
@@ -74,6 +77,8 @@ public class Issue implements java.io.Serializable {
 		this.priorityCode = priorityCode;
 		this.projectId = projectId;
 		this.comments = comments;
+		this.startDate = startDate;
+		this.endDate = endDate;
 	}
 
 	@Id
@@ -223,6 +228,22 @@ public class Issue implements java.io.Serializable {
 
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 }
