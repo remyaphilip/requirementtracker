@@ -35,6 +35,7 @@ public class Project implements java.io.Serializable {
 	@JsonIgnore
 	private Board board;
 	private String name;
+	private String organisation;
 
 	public Project() {
 	}
@@ -43,9 +44,10 @@ public class Project implements java.io.Serializable {
 		this.board = board;
 	}
 
-	public Project(Board board, String name) {
+	public Project(Board board, String name, String organisation) {
 		this.board = board;
 		this.name = name;
+		this.organisation = organisation;
 	}
 
 	@Id
@@ -77,5 +79,14 @@ public class Project implements java.io.Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Column(name = "organisation", length = 45)
+	public String getOrganisation() {
+		return organisation;
+	}
+
+	public void setOrganisation(String organisation) {
+		this.organisation = organisation;
 	}
 }

@@ -1,8 +1,10 @@
 package com.project.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.issuetrack.model.Comment;
 import com.issuetrack.model.Issue;
 import com.issuetrack.repository.IssueRepository;
+import com.project.model.ListType;
+import com.project.model.Project;
 import com.project.repository.JdbcRepository;
+import com.project.repository.ProjectRepository;
+import com.user.model.User;
+import com.user.repository.UserRepository;
 
 @RequestMapping(path = "/")
 @RestController
@@ -22,6 +29,12 @@ public class IssueController {
 
 	@Autowired
 	public JdbcRepository jdbcRepository;
+
+	@Autowired
+	public UserRepository userRepository;
+
+	@Autowired
+	public ProjectRepository projectRepository;
 
 	@RequestMapping(path = "project/{id}/issues", method = RequestMethod.GET)
 	public List<Issue> getProjectIssues(@PathVariable("id") Integer id) {
@@ -35,7 +48,20 @@ public class IssueController {
 
 	@RequestMapping(path = "issue/{userId}", method = RequestMethod.GET)
 	public List<Issue> getIssuePerUser(@PathVariable("userId") Integer userId) {
-		return jdbcRepository.issueFindAllPerUser(userId);
+		String organisation = userRepository.findOne(userId).getOrganisation();
+		Project project = new Project();
+		project.setOrganisation(organisation);
+		Example<Project> ex = Example.of(project);
+		Issue issue = new Issue();
+		List<Issue> issues = new ArrayList<Issue>();
+		projectRepository.findAll(ex).forEach(p -> {
+			issue.setProjectId(p.getProjectId());
+			Example<Issue> ex1 = Example.of(issue);
+			issues.addAll(issueRepository.findAll(ex1));
+
+		});
+
+		return issues;
 	}
 
 	@RequestMapping(path = "issue/{projectId}", method = RequestMethod.POST)

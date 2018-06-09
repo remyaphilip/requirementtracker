@@ -5,12 +5,14 @@ import java.util.Set;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Example;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.project.model.Board;
@@ -76,9 +78,21 @@ public class BoardController {
 
 	}
 	
+
+	
 	@RequestMapping(path = "list/{id}",method = RequestMethod.DELETE)
 	public void removeList(@PathVariable("id") Integer id){
 		listRepository.delete(id);
 	}
+	
+	@RequestMapping(path = "projectId/{projectId}", method = RequestMethod.GET)
+	public java.util.List<List> getAllListPerProject(@PathVariable("projectId") Integer projectId) {
+		List list = new List();
+		list.setProjectId(projectId);
+		Example<List> ex = Example.of(list);
+		return listRepository.findAll(ex);
+
+	}
+
 
 }
