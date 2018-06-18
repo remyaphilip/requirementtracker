@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.issuetrack.model.Issue;
+import com.issuetrack.repository.IssueRepository;
 import com.project.Dao.ProjectHasUsersDao;
 import com.project.model.ListType;
 import com.project.model.Project;
@@ -18,6 +20,7 @@ import com.project.model.Role;
 import com.project.model.UserHasProject;
 import com.project.model.UserHasProjectId;
 import com.project.repository.BoardRepository;
+import com.project.repository.CardRepository;
 import com.project.repository.JdbcRepository;
 import com.project.repository.ListRepository;
 import com.project.repository.ListTypeRepository;
@@ -25,6 +28,7 @@ import com.project.repository.ProjectRepository;
 import com.project.repository.RoleRepository;
 import com.project.repository.UserHasProjectRepository;
 import com.user.model.User;
+import com.project.model.Card;
 
 @RestController
 @RequestMapping(path = "/")
@@ -47,6 +51,10 @@ public class ProjectController {
 	public ListTypeRepository listTypeRepository;
 	@Autowired
 	public ListRepository listRepository;
+	@Autowired
+	public CardRepository cardRepository;
+	@Autowired
+	public IssueRepository issueRepository;
 
 	@RequestMapping(path = "project/{id}/", method = RequestMethod.POST)
 	public Project addProject(@PathVariable("id") Integer id, @RequestBody Project project) {
@@ -94,7 +102,7 @@ public class ProjectController {
 	}
 
 	@RequestMapping(path = "newproject", method = RequestMethod.POST)
-	public boolean addUserToProject(@RequestBody Project project) {
+	public boolean addProject(@RequestBody Project project) {
 		project.setBoard(boardRepository.getOne(1));
 		ListType listType = new ListType();
 		listType.setBoardId(1);
@@ -112,5 +120,38 @@ public class ProjectController {
 		return true;
 
 	}
+
+	@RequestMapping(path = "editproject/{projectId}", method = RequestMethod.POST)
+	public boolean editProject(@PathVariable("projectId") Integer projectId, @RequestBody Project project) {
+		project.setProjectId(projectId);
+		project.setBoard(boardRepository.findOne(1));
+		projectRepository.save(project);
+		return true;
+	}
+
+	@RequestMapping(path = "removeproject/{projectId}",method = RequestMethod.DELETE)
+		public boolean removeProject(@PathVariable("projectId") Integer projectId){
+		  Project project = new Project();
+		  project.setProjectId(projectId);
+		  
+		  com.project.model.List list = new com.project.model.List();
+		  list.setProjectId(projectId);
+		  Example<com.project.model.List> ex = Example.of(list); 
+		  listRepository.delete(listRepository.findAll(ex));
+		  
+		  Card card = new Card();
+		  card.setProjectId(projectId);
+		  Example<Card> ex1 = Example.of(card);
+		  cardRepository.delete(cardRepository.findAll(ex1));
+		  
+		  Issue issue = new Issue();
+		  issue.setProjectId(projectId);
+		  Example<Issue> ex2 = Example.of(issue);
+		  issueRepository.delete(issueRepository.findAll(ex2));
+		  
+		  projectRepository.delete(projectId);
+		  
+		  return true;
+		}
 
 }

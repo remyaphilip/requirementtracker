@@ -65,19 +65,19 @@ public class IssueController {
 	}
 
 	@RequestMapping(path = "issue/{projectId}", method = RequestMethod.POST)
-	public Issue AddIssue(@PathVariable("projectId") Integer projectId, @RequestBody Issue issue) {
+	public boolean AddIssue(@PathVariable("projectId") Integer projectId, @RequestBody Issue issue) {
 		issue.setProjectId(projectId);
 		issueRepository.save(issue);
-		return issue;
+		return true;
 	}
 
 	@RequestMapping(path = "editissue/{issueId}/{projectId}", method = RequestMethod.POST)
-	public Issue EditIssue(@PathVariable("issueId") Integer issueId, @PathVariable("projectId") Integer projectId,
+	public boolean EditIssue(@PathVariable("issueId") Integer issueId, @PathVariable("projectId") Integer projectId,
 			@RequestBody Issue issue) {
 		issue.setProjectId(projectId);
 		issue.setIssueId(issueId);
 		issueRepository.save(issue);
-		return issue;
+		return true;
 
 	}
 

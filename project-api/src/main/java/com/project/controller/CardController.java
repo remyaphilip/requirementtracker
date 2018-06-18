@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,17 +43,29 @@ public class CardController {
 	}
 
 	@RequestMapping(path = "card/{listId}", method = RequestMethod.POST)
-	public Card InsertCard(@PathVariable("listId") Integer listId, @RequestBody Card card) {
-		
+	public boolean insertCard(@PathVariable("listId") Integer listId, @RequestBody Card card) {
+
 		card.setList(listRepository.findOne(listId));
 		cardRepository.save(card);
-		return card;
+		return true;
 	}
-//	@RequestMapping(path = "cardsperproject/{projectId}",method = RequestMethod.GET)
-//	public List<Card> getAllCardPerProject(@PathVariable("projectId") Integer projectId){
-//		Card card = new Card();
-//		card.setProjectId(projectId);
-//		Example<Card> ex = Example.of(card);
-//		return cardRepository.findAll(ex);
-//	}
+
+	@RequestMapping(path = "editcard/{listId}/{cardId}", method = RequestMethod.POST)
+	public boolean editCard(@PathVariable("listId") Integer listId, @PathVariable("cardId") Integer cardId,
+			@RequestBody Card card) {
+		card.setList(listRepository.findOne(listId));
+		card.setCardId(cardId);
+		cardRepository.save(card);
+		return true;
+	}
+
+	
+	@RequestMapping(path = "removecard/{cardId}", method = RequestMethod.DELETE)
+	public boolean editCard(@PathVariable("cardId") Integer cardId) {
+		Card card = new Card();
+		card.setCardId(cardId);
+		cardRepository.delete(card);
+		return true;
+	}
+	
 }
