@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -23,12 +24,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth
-		.userDetailsService(userDetailsService);
+		.authenticationProvider(promanAuthenticationProvider());
 //		.inMemoryAuthentication()
 //		.withUser("user").password("pass").authorities("ROLE_USER")
 //		.and()
 //		.withUser("adminuser").password("password").authorities("ROLE_ADMIN");
 	}
+	
+	private AuthenticationProvider promanAuthenticationProvider(){
+		return new PromanAuthenticationProvider();
+	}
+	
+	
 
 	 @Override
 	 protected void configure(HttpSecurity http) throws Exception {
