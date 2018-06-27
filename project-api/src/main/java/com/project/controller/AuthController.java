@@ -36,8 +36,8 @@ public class AuthController {
 
 	@RequestMapping(path = "secured", method = RequestMethod.GET)
 	public void getBlah2() {
-		User u = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		System.out.println(u.getUsername());
+		String user = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		System.out.println(user);
 	}
 	
 	@RequestMapping(path = "loginfailure", method = RequestMethod.GET)

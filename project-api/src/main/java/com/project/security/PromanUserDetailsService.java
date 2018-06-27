@@ -28,9 +28,8 @@ public class PromanUserDetailsService implements UserDetailsService {
 		user = userRepository.findOne(ex1);
 		List<GrantedAuthority> authority = new ArrayList<GrantedAuthority>();
 		authority.add(new SimpleGrantedAuthority(user.getUserRole()));
-		UserDetails userDetails = (UserDetails)new User(user.getEmail(),user.getPasswordHash(), authority);
 
-		return userDetails;
+		return null;
 	}
 
 }

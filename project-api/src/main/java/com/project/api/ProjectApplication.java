@@ -25,9 +25,8 @@ public class ProjectApplication {
 //	public WebMvcConfigurer corsConfigurer() {
 //		return new WebMvcConfigurerAdapter() {
 //			public void addCorsMappings(CorsRegistry registry) {
-//				registry.addMapping("/**")
-//				.allowedOrigins("*")
-//				.allowedMethods("GET","POST","PUT","DELETE","HEAD","OPTIONS");
+//				registry.addMapping("/**").allowedOrigins("*").allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD",
+//						"OPTIONS");
 //			}
 //		};
 //	}
