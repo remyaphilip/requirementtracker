@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -17,11 +16,10 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -34,7 +32,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(authProvider).userDetailsService(super.userDetailsService());
+		auth.authenticationProvider(authProvider);
 		// .inMemoryAuthentication()
 		// .withUser("user").password("pass").authorities("ROLE_USER")
 		// .and()
@@ -43,16 +41,30 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.formLogin().loginProcessingUrl("/login").successHandler(successHandler())
-				// .failureForwardUrl("/loginfailure")
-				.permitAll().and().authorizeRequests()
-				// .antMatchers("/login").permitAll()
-				.anyRequest().authenticated().and().logout().logoutUrl("/logout").invalidateHttpSession(true).and()
-				.csrf().disable();
-
-		http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
+		http
+		.exceptionHandling().authenticationEntryPoint(requestInterceptor())
+		.and()
+		.formLogin().loginProcessingUrl("/login").successHandler(successHandler())
+				.failureHandler((request, response, authentication) -> {
+					response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+					response.getWriter().write("".toCharArray());
+					response.flushBuffer();
+				}).permitAll()
+				.and()
+				.authorizeRequests().anyRequest().authenticated()
+				.and()
+				.logout().logoutUrl("/logout")
+				.logoutSuccessHandler((httpServletRequest, httpServletResponse, authentication) -> {
+					httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+				}).invalidateHttpSession(true).deleteCookies("JSESSIONID").and().cors()
+				.configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).and().csrf()
+				.disable();
 
 	}
+
+	// private AccessDecisionManager accessDecisionManager(){
+	// return new UnanimousBased();
+	// }
 
 	private AuthenticationSuccessHandler successHandler() {
 		return new AuthenticationSuccessHandler() {
@@ -69,21 +81,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		};
 	}
 
-	// @Override
-	// protected void configure(HttpSecurity http) throws Exception {
-	// http
-	// .httpBasic()
-	// .and()
-	// .authorizeRequests()
-	// .antMatchers("/login")
-	// .permitAll()
-	// .anyRequest()
-	// .authenticated()
-	// .and()
-	// .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-	//
-	// }
-
+	private AuthenticationEntryPoint requestInterceptor(){
+		return new CustomAuthenticationEntryPoint();
+	}
+	
+	class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint{
+		@Override
+		public void commence(HttpServletRequest request, HttpServletResponse response,
+				AuthenticationException authException) throws IOException, ServletException {
+				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+		}
+		
+	}
+	
+	
 	// @Bean
 	// public AuthenticationEntryPoint loginUrlauthenticationEntryPoint(){
 	// return new LoginUrlAuthenticationEntryPoint("/login");

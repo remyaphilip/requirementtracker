@@ -35,7 +35,7 @@ public class PromanAuthenticationProvider implements AuthenticationProvider {
 		Example<User> ex = Example.of(user);
 		if (userRepository.exists(ex)) {
 			List<GrantedAuthority> grantedAuth = new ArrayList<GrantedAuthority>();
-			grantedAuth.add(new SimpleGrantedAuthority(userRepository.findOne(ex).getUserRole()));
+			grantedAuth.add(new SimpleGrantedAuthority("ROLE_USER"));
 			UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(username, password,
 					grantedAuth);
 			return auth;
