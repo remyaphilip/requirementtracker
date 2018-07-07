@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.Dao.UserDto;
+import com.project.service.UserService;
 import com.user.model.User;
 import com.user.repository.UserRepository;
 
@@ -21,12 +23,13 @@ public class UserController {
 
 	@Autowired
 	public UserRepository userRepository;
+	
+	@Autowired
+	public UserService userService;
 
 	@RequestMapping(path = "peers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<User> getAllUsers() {
-		String userEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User user = userRepository.findByEmail(userEmail);
-		return userRepository.findByOrganisation(user.getOrganisation());
+	public List<UserDto> getAllUsers() {
+		return userService.getUserDtoList();
 	}
 
 	@RequestMapping(path = "newuser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
