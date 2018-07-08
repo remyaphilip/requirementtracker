@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,21 +47,19 @@ public class IssueController {
 		return jdbcRepository.commentFindAll(id);
 	}
 
-	@RequestMapping(path = "issue/{userId}", method = RequestMethod.GET)
-	public List<Issue> getIssuePerUser(@PathVariable("userId") Integer userId) {
-		String organisation = userRepository.findOne(userId).getOrganisation();
-		Project project = new Project();
-		project.setOrganisation(organisation);
-		Example<Project> ex = Example.of(project);
+	@RequestMapping(path = "issue", method = RequestMethod.GET)
+	public List<Issue> getIssuePerUser() {
+		String userEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = userRepository.findByEmail(userEmail);
+		List<Project> projectList = new ArrayList<Project>();
+		projectList = projectRepository.findByOrganisation(user.getOrganisation());
 		Issue issue = new Issue();
 		List<Issue> issues = new ArrayList<Issue>();
-		projectRepository.findAll(ex).forEach(p -> {
+			projectList.forEach(p->{
 			issue.setProjectId(p.getProjectId());
 			Example<Issue> ex1 = Example.of(issue);
 			issues.addAll(issueRepository.findAll(ex1));
-
 		});
-
 		return issues;
 	}
 

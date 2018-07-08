@@ -31,6 +31,26 @@ public class UserService {
 
 	}
 
+//	@InjectMocks //whatever class you are testing
+//	UserService userService; 
+//	
+//	
+//	@Mock // dependencies
+//	UserRepository repo;
+//	
+//	
+//	@Test
+//	public "test getUserDTOList() returns a list of users"(){
+//		given:
+//			User user = new User();
+//			when(userRepository.findByEmail(_)).thenReturn(user);
+//			
+//		when:
+//			List<UserDto> response = userService.gettUserDtoList()
+//		then:
+//			response instanceof List
+//	}
+	
 	public UserDto createDto(User user) {
 		UserDto userDto = new UserDto();
 		userDto.setName(user.getName());
