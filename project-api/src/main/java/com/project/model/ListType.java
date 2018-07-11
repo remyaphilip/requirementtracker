@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "listtype", catalog = "project_mgmt")
+@Table(name = "listtype", catalog = "proman_db")
 public class ListType implements java.io.Serializable {
 
 	/**

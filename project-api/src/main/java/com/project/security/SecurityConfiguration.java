@@ -65,7 +65,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.deleteCookies("JSESSIONID")
 			 .and().cors()
 			 .configurationSource(request -> new
-			 CorsConfiguration().applyPermitDefaultValues())
+			 CorsConfiguration()
+			 .applyPermitDefaultValues())
 			.and()
 			.csrf()
 			.disable();
