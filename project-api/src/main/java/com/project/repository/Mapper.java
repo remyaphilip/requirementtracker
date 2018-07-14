@@ -61,7 +61,7 @@ public class Mapper implements JdbcRepository {
 	public User getUser(String email, String passwordhash) {
 		String auth_fetch_sql = "select u.user_id,u.user_name,u.password_hash,u.email,u.job_title,u.organisation,u.profile_images "
 //				+ "from user_service.user u where u.email = ? and u.password_hash = ?";
-		+ "from proman_db.user u where u.email = ? and u.password_hash = ?";
+		+ "from user u where u.email = ? and u.password_hash = ?";
 		return this.jdbcTemplate.queryForObject(auth_fetch_sql, new Object[] { email, passwordhash },
 				new authRowMapper());
 	}
