@@ -7,7 +7,7 @@ Project management application : Backend
 
 o	Features
 
-	Create and manage project development
+	Create and manage project scrum board
 
 	Create and manage issues reported in project
 
